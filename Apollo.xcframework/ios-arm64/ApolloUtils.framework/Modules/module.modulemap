@@ -1,4 +1,0 @@
-framework module ApolloUtils {
-  header "ApolloUtils-Swift.h"
-  requires objc
-}
