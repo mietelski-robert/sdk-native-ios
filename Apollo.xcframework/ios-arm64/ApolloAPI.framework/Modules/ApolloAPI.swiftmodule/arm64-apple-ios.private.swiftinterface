@@ -1,0 +1,203 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name ApolloAPI
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum Selection {
+  case field(ApolloAPI.Selection.Field)
+  case booleanCondition(ApolloAPI.Selection.BooleanCondition)
+  case typeCase(ApolloAPI.Selection.TypeCase)
+  case fragmentSpread(ApolloAPI.Selection.FragmentSpread)
+  public struct Field {
+    public init(_ name: Swift.String, alias: Swift.String? = nil, arguments: ApolloAPI.Selection.Field.Arguments? = nil, type: ApolloAPI.Selection.Field.OutputType)
+    public struct Arguments : Swift.ExpressibleByDictionaryLiteral {
+      public init(dictionaryLiteral elements: (Swift.String, ApolloAPI.InputValue)...)
+      public typealias Key = Swift.String
+      public typealias Value = ApolloAPI.InputValue
+    }
+    indirect public enum OutputType {
+      case scalar(any Any.Type)
+      case object([ApolloAPI.Selection])
+      case nonNull(ApolloAPI.Selection.Field.OutputType)
+      case list(ApolloAPI.Selection.Field.OutputType)
+    }
+  }
+  public struct BooleanCondition {
+    public init(variableName: Swift.String, inverted: Swift.Bool, selections: [ApolloAPI.Selection])
+  }
+  public struct FragmentSpread {
+    public init(_ fragment: any ApolloAPI.AnySelectionSet.Type)
+  }
+  public struct TypeCase {
+    public init(variants: [Swift.String : [ApolloAPI.Selection]], default: [ApolloAPI.Selection])
+  }
+}
+public struct ResponseDict {
+  public subscript<T>(key: Swift.String) -> T where T : ApolloAPI.ScalarType {
+    get
+  }
+  public subscript<T>(key: Swift.String) -> T? where T : ApolloAPI.ScalarType {
+    get
+  }
+  public subscript<T>(key: Swift.String) -> T where T : ApolloAPI.SelectionSet {
+    get
+  }
+  public subscript<T>(key: Swift.String) -> T? where T : ApolloAPI.SelectionSet {
+    get
+  }
+  public subscript<T>(key: Swift.String) -> [T] where T : ApolloAPI.SelectionSet {
+    get
+  }
+  public subscript<T>(key: Swift.String) -> ApolloAPI.GraphQLEnum<T> where T : Swift.CaseIterable, T : Swift.RawRepresentable, T.RawValue == Swift.String {
+    get
+  }
+  public subscript<T>(key: Swift.String) -> ApolloAPI.GraphQLEnum<T>? where T : Swift.CaseIterable, T : Swift.RawRepresentable, T.RawValue == Swift.String {
+    get
+  }
+}
+public enum SelectionSetType<S> where S : ApolloAPI.GraphQLSchema {
+  case ObjectType(S.ObjectType)
+  case Interface(S.Interface)
+  case Union(S.Union)
+}
+public protocol AnySelectionSet : ApolloAPI.ResponseObject {
+  static var selections: [ApolloAPI.Selection] { get }
+}
+public protocol SelectionSet : ApolloAPI.ResponseObject, Swift.Equatable {
+  associatedtype Schema : ApolloAPI.GraphQLSchema
+  static var __parentType: ApolloAPI.SelectionSetType<Self.Schema> { get }
+}
+public protocol ResponseObject {
+  var data: ApolloAPI.ResponseDict { get }
+  init(data: ApolloAPI.ResponseDict)
+}
+public protocol Fragment : ApolloAPI.SelectionSet {
+}
+public protocol HasFragments : ApolloAPI.SelectionSet {
+  associatedtype Fragments : ApolloAPI.ResponseObject
+}
+public protocol ScalarType {
+}
+extension Swift.String : ApolloAPI.ScalarType {
+}
+extension Swift.Int : ApolloAPI.ScalarType {
+}
+extension Swift.Float : ApolloAPI.ScalarType {
+}
+extension Swift.Double : ApolloAPI.ScalarType {
+}
+extension Swift.Bool : ApolloAPI.ScalarType {
+}
+public enum GraphQLOptional<T> {
+  case notPresent
+  case nullValue
+  case value(T)
+}
+extension ApolloAPI.GraphQLOptional : Swift.Hashable where T : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension ApolloAPI.GraphQLOptional : Swift.Equatable where T : Swift.Equatable {
+  public static func == (lhs: ApolloAPI.GraphQLOptional<T>, rhs: ApolloAPI.GraphQLOptional<T>) -> Swift.Bool
+}
+extension Swift.KeyedEncodingContainer {
+  public mutating func encodeGraphQLOptional<T>(_ optional: ApolloAPI.GraphQLOptional<T>, forKey key: K) throws where T : Swift.Decodable, T : Swift.Encodable
+}
+extension Swift.KeyedDecodingContainer {
+  public func decodeGraphQLOptional<T>(forKey key: K) throws -> ApolloAPI.GraphQLOptional<T> where T : Swift.Decodable, T : Swift.Encodable
+}
+indirect public enum InputValue {
+  case scalar(any ApolloAPI.ScalarType)
+  case variable(Swift.String)
+  case list([ApolloAPI.InputValue])
+  case object([Swift.String : ApolloAPI.InputValue])
+  case none
+}
+extension ApolloAPI.InputValue : Swift.ExpressibleByNilLiteral {
+  @inlinable public init(nilLiteral: ()) {
+    self = .none
+  }
+}
+extension ApolloAPI.InputValue : Swift.ExpressibleByStringLiteral {
+  @inlinable public init(stringLiteral value: Swift.StringLiteralType) {
+    self = .scalar(value)
+  }
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.StringLiteralType
+  public typealias StringLiteralType = Swift.StringLiteralType
+  public typealias UnicodeScalarLiteralType = Swift.StringLiteralType
+}
+extension ApolloAPI.InputValue : Swift.ExpressibleByIntegerLiteral {
+  @inlinable public init(integerLiteral value: Swift.IntegerLiteralType) {
+    self = .scalar(value)
+  }
+  public typealias IntegerLiteralType = Swift.IntegerLiteralType
+}
+extension ApolloAPI.InputValue : Swift.ExpressibleByFloatLiteral {
+  @inlinable public init(floatLiteral value: Swift.FloatLiteralType) {
+    self = .scalar(value)
+  }
+  public typealias FloatLiteralType = Swift.FloatLiteralType
+}
+extension ApolloAPI.InputValue : Swift.ExpressibleByBooleanLiteral {
+  @inlinable public init(booleanLiteral value: Swift.BooleanLiteralType) {
+    self = .scalar(value)
+  }
+  public typealias BooleanLiteralType = Swift.BooleanLiteralType
+}
+extension ApolloAPI.InputValue : Swift.ExpressibleByArrayLiteral {
+  @inlinable public init(arrayLiteral elements: ApolloAPI.InputValue...) {
+    self = .list(Array(elements))
+  }
+  public typealias ArrayLiteralElement = ApolloAPI.InputValue
+}
+extension ApolloAPI.InputValue : Swift.ExpressibleByDictionaryLiteral {
+  public init(dictionaryLiteral elements: (Swift.String, ApolloAPI.InputValue)...)
+  public typealias Key = Swift.String
+  public typealias Value = ApolloAPI.InputValue
+}
+public protocol GraphQLSchema {
+  associatedtype ObjectType : ApolloAPI.SchemaObjectType where Self.ObjectType == Self.Union.ObjectType
+  associatedtype Union : ApolloAPI.SchemaUnion
+  associatedtype Interface where Self.Interface == Self.ObjectType.Interface
+}
+public protocol SchemaTypeEnum : Swift.Equatable, Swift.RawRepresentable where Self.RawValue == Swift.String {
+}
+public protocol SchemaObjectType : ApolloAPI.SchemaTypeEnum {
+  associatedtype Interface : ApolloAPI.SchemaTypeEnum
+  static var unknownCase: Self { get }
+  var implementedInterfaces: [Self.Interface] { get }
+}
+public protocol SchemaUnion : ApolloAPI.SchemaTypeEnum {
+  associatedtype ObjectType
+  var possibleTypes: [Self.ObjectType] { get }
+}
+public enum GraphQLEnum<T> : Swift.CaseIterable, Swift.Equatable, Swift.RawRepresentable where T : Swift.CaseIterable, T : Swift.RawRepresentable, T.RawValue == Swift.String {
+  public typealias RawValue = Swift.String
+  case `case`(T)
+  case __unknown(Swift.String)
+  public init(_ caseValue: T)
+  public init(rawValue: Swift.String)
+  public var value: T? {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+  public static var allCases: [ApolloAPI.GraphQLEnum<T>] {
+    get
+  }
+  public typealias AllCases = [ApolloAPI.GraphQLEnum<T>]
+}
+extension ApolloAPI.GraphQLEnum {
+  public static func == (lhs: ApolloAPI.GraphQLEnum<T>, rhs: ApolloAPI.GraphQLEnum<T>) -> Swift.Bool
+  public static func == (lhs: ApolloAPI.GraphQLEnum<T>, rhs: T) -> Swift.Bool
+  public static func != (lhs: ApolloAPI.GraphQLEnum<T>, rhs: T) -> Swift.Bool
+}
+public func == <T>(lhs: ApolloAPI.GraphQLEnum<T>?, rhs: T) -> Swift.Bool where T : Swift.CaseIterable, T : Swift.RawRepresentable, T.RawValue == Swift.String
+public func != <T>(lhs: ApolloAPI.GraphQLEnum<T>?, rhs: T) -> Swift.Bool where T : Swift.CaseIterable, T : Swift.RawRepresentable, T.RawValue == Swift.String
+public func ~= <T>(lhs: T, rhs: ApolloAPI.GraphQLEnum<T>) -> Swift.Bool where T : Swift.CaseIterable, T : Swift.RawRepresentable, T.RawValue == Swift.String
