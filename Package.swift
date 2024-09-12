@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/apollographql/apollo-ios",
-            exact: "0.49.1"
+            from: "1.0.0"
         ),
         .package(
             url: "https://github.com/onevcat/Kingfisher.git",
