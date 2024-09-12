@@ -14,10 +14,6 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/onevcat/Kingfisher.git",
-            from: "7.0.0"
-        ),
-        .package(
             url: "https://github.com/airbnb/lottie-ios",
             from: "4.4.1"
         )
@@ -36,6 +32,10 @@ let package = Package(
             path: "ApolloUtils.xcframework"
         ),
         .binaryTarget(
+            name: "Kingfisher",
+            path: "Kingfisher.xcframework"
+        ),
+        .binaryTarget(
             name: "ZowieSDK",
             path: "ZowieSDK.xcframework"
         ),
@@ -45,8 +45,8 @@ let package = Package(
                 .target(name: "Apollo"),
                 .target(name: "ApolloAPI"),
                 .target(name: "ApolloUtils"),
+                .target(name: "Kingfisher"),
                 .target(name: "ZowieSDK"),
-                .product(name: "Kingfisher", package: "Kingfisher"),
                 .product(name: "Lottie", package: "lottie-ios")
             ],
             path: "Sources"
