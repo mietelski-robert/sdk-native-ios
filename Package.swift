@@ -14,10 +14,6 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/apollographql/apollo-ios",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/onevcat/Kingfisher.git",
             from: "7.0.0"
         ),
@@ -28,15 +24,28 @@ let package = Package(
     ],
     targets: [
         .binaryTarget(
+            name: "Apollo",
+            path: "Apollo.xcframework"
+        ),
+        .binaryTarget(
+            name: "ApolloAPI",
+            path: "ApolloAPI.xcframework"
+        ),
+        .binaryTarget(
+            name: "ApolloUtils",
+            path: "ApolloUtils.xcframework"
+        ),
+        .binaryTarget(
             name: "ZowieSDK",
             path: "ZowieSDK.xcframework"
         ),
         .target(
             name: "ZowieSDKTargets",
             dependencies: [
+                .target(name: "Apollo"),
+                .target(name: "ApolloAPI"),
+                .target(name: "ApolloUtils"),
                 .target(name: "ZowieSDK"),
-                .product(name: "Apollo", package: "apollo-ios"),
-                .product(name: "ApolloWebSocket", package: "apollo-ios"),
                 .product(name: "Kingfisher", package: "Kingfisher"),
                 .product(name: "Lottie", package: "lottie-ios")
             ],
